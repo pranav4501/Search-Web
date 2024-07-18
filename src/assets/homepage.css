@@ -1,0 +1,20 @@
+.home-page{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    color: aliceblue;
+    .search-bar-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
+            border-radius: 12px;
+        }
+    }
+}
