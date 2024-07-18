@@ -5,6 +5,7 @@ import Search from './components/search';
 import { useState } from 'react';
 import { ApiResponses  } from './interfaces/responses';
 import Chat from './components/chat';
+import HomePage from './components/homepage';
 
 function App() {
 
@@ -17,11 +18,11 @@ function App() {
 
   return (
     <div className="app">
-      {apiResponses.length > 0?
-      <Chat apiResponsesArray={apiResponses} /> :
-      <div className= "Search-title">Search</div>
+      { apiResponses.length > 0 ?
+          <Chat apiResponsesArray={apiResponses} setApiResponses={addApiResponse}/> :
+          <HomePage setApiResponses={addApiResponse} />
       }
-    <Search setApiResponses={addApiResponse} />
+    {/* <Search setApiResponses={addApiResponse} /> */}
     </div>
   );
 }
