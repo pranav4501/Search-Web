@@ -69,7 +69,7 @@ function Search( { setApiResponses } : any) {
     }
   };
   return (
-    <div>
+    <div className="search">
         <div ref = {inputRef} contentEditable onInput={handleChange} onKeyDown={handleKeyDown} role='textbox' aria-multiline = 'true' />
         <button onClick={handleSubmit} disabled={isLoading || value.trim() === ''}>{isLoading ? <span>Sending</span>:<span>Send</span>}</button>  
     </div>
