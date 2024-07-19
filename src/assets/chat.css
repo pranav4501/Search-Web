@@ -1,0 +1,114 @@
+.chat-window{
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: azure;
+    padding: 20px 40px;
+    gap: 20px;
+    .chat-window-header{
+        height: 50px;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;
+        align-items: flex-start;
+        /* margin-bottom: 20px; */
+        .logo{
+            font-family: "NTR", sans-serif;
+            font-weight: 600;
+            font-style: normal;
+            font-size: 32px;
+        }
+        .icons{
+            display: flex;
+            gap: 20px;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            .MuiSvgIcon-root{
+                font-size: 26px;
+            }
+            .MuiSvgIcon-root:hover{
+                cursor: pointer;
+                color: #477bc9;
+                transition: 0.2s linear;
+            }
+        }
+    }
+    .chat-window-div{
+        width: 80%;
+        height: 100%;
+        overflow-y: auto;
+        padding: 10px;
+    }
+    .chat-search-div{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
+            width: 80%;
+            border-radius: 30px;
+            background-color: #103a55;
+            /* #0e3852; */
+            .search-bar{
+                color: white;
+            }
+            .MuiSvgIcon-root{
+                color: white;
+            }
+            .MuiSvgIcon-root:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.message-div{
+    border-radius: 20px;
+    background-color: #1d67d6;
+    /* rgb(65, 65, 65); */
+}
+
+.query-response-pair{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* padding: 0px 30px; */
+    .query{
+        display: flex;
+        justify-content: flex-end;
+        .query-div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+        }
+    }
+    .response{
+        display: flex;
+        .response-div{
+            background-color: #202a3a;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 15px 25px;
+            gap: 15px;
+            .single-response{
+                /* padding: 10px; */
+                border-radius: 12px;
+                /* background: #000f18; */
+                margin-bottom: 10px;
+                p {
+                    margin: 5px 0px;
+                }
+                a {
+                    color: rgb(67, 142, 228);
+                }
+            }
+        }
+    }
+}

@@ -42,6 +42,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #2b2c27;
+  background-color: #000f18;
   min-height: 100vh;
+}
+
+::-webkit-scrollbar{
+	width: 10px;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track-piece{
+	background-color: #2e3f49;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb{
+	background-color: #909090;
+	outline-offset: -2px;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+	background-color: #246f9b;
 }

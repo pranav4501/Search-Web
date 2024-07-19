@@ -3,12 +3,13 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 interface ApiResponse {
     data: any;
 }
 
-function Search( { setApiResponses } : any) {
+function Search( { setApiResponses, extraProps } : any) {
     const [value, setValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef<HTMLDivElement>(null);
@@ -80,8 +81,8 @@ function Search( { setApiResponses } : any) {
         onKeyDown={handleKeyDown}
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
-        multiline={true}
-        rows={3}
+        multiline={extraProps?.multiline ?? true}
+        rows={extraProps?.rows ?? 3}
       />
       <div onClick={handleSubmit}>
         <IconButton 
@@ -89,7 +90,7 @@ function Search( { setApiResponses } : any) {
                 type="button" 
                 sx={{ p: '10px' }} 
                 aria-label="search">
-            <SearchIcon />
+            <ArrowUpwardIcon />
         </IconButton>
       </div>
     </Paper>
