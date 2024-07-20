@@ -7,31 +7,26 @@
     flex-direction: column;
     gap: 40px;
     color: aliceblue;
-    .search-bar-div{
+    .help-window{
+        width: 60%;
         display: flex;
-        justify-content: center;
         align-items: center;
-        flex-direction: column;
-        gap: 10px;
-        .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
+        justify-content: space-evenly;
+        gap: 20px;
+        .help-window-info{
+            .help-window-header{
+                font-size: 32px;
+                font-weight: 600;
+            }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: rgb(45, 45, 75);
+            padding: 20px;
+            gap: 20px;
             border-radius: 12px;
-        }
-        .search-div{
-            form{
-                width:100%;
-            }
-            .recommended-div{
-                padding-top: 5%;
-                display: flex;
-                max-width: 100%;
-                justify-content: space-evenly;
-                button{
-                    background-color: #1d67d6;
-                    color: white;
-                    border-radius: 12px;
-                    max-width: 31%;
-                }
-            }
         }
     }
 }

@@ -20,9 +20,8 @@ function App() {
     <div className="app">
       { apiResponses.length > 0 ?
           <Chat apiResponsesArray={apiResponses} setApiResponses={addApiResponse}/> :
-          <HomePage setApiResponses={addApiResponse} />
+          <HomePage setApiResponses={addApiResponse}/>
       }
-    {/* <Search setApiResponses={addApiResponse} /> */}
     </div>
   );
 }

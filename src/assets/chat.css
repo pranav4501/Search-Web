@@ -57,7 +57,13 @@
             width: 80%;
             border-radius: 30px;
             background-color: #103a55;
-            /* #0e3852; */
+            .MuiOutlinedInput-root{
+                color: white;
+                border-color: white;
+                fieldset{
+                    border-color: white;
+                }
+            }
             .search-bar{
                 color: white;
             }
@@ -103,6 +109,7 @@
             flex-direction: column;
             padding: 15px 25px;
             gap: 15px;
+            position: relative;
             .single-response{
                 /* padding: 10px; */
                 border-radius: 12px;
@@ -115,6 +122,33 @@
                     color: rgb(67, 142, 228);
                 }
             }
+            .copy-popover{
+                visibility: hidden;
+                width: fit-content;
+                position: absolute;
+                right: 0px;
+                bottom: -15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                /* background-color: rgba(29, 103, 214, 0.2); */
+                border-radius: 3px;
+                padding: 3px 6px;
+                .MuiSvgIcon-root{
+                    color: rgb(255, 255, 255);
+                    font-size: 18px;
+                }
+                span{
+                    font-size: 14px;
+                }
+            }
+            .copy-popover:hover{
+                cursor: pointer;
+            }
+        }
+        .response-div:hover .copy-popover{
+                visibility: visible;
         }
     }
 }

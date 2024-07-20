@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect, FormEvent, KeyboardEvent, ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect, KeyboardEvent, ChangeEvent } from 'react';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import recommedations from '../data/recommendations.json';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import '../assets/search.css'
 
 interface ApiResponse {
     data: any;
@@ -11,6 +13,7 @@ interface ApiResponse {
 
 function Search( { setApiResponses, extraProps } : any) {
     const [value, setValue] = useState('');
+    const [queryType, setQueryType] = useState<string>('ask');
     const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef<HTMLDivElement>(null);
 
@@ -19,6 +22,12 @@ function Search( { setApiResponses, extraProps } : any) {
         inputRef.current.focus();
         }
     }, []);
+
+    const handleQueryTypeChange = (event: SelectChangeEvent<string>) => {
+        setQueryType(event.target.value);
+        console.log(event.target.value);
+    };
+
     const handleChange = (e : ChangeEvent<HTMLInputElement |  HTMLTextAreaElement>) => {
         setValue(e.target.value);
     };
@@ -26,56 +35,17 @@ function Search( { setApiResponses, extraProps } : any) {
     const handleKeyDown = (e : KeyboardEvent<HTMLInputElement |  HTMLTextAreaElement>) => {
         if(e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleSubmitAsk();
+            handleSubmit();
         }
     };
 
-    const handleSubmit = async () => {
-        if(value.trim() === '') {
-        return;
-        }
-        setIsLoading(true);
-
-        try {
-        const res = await fetch('https://api-kn.replit.app/search', {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-            query: value,
-            }),
-        });
-
-        if (!res.ok) {
-            throw new Error('Network response was not ok');
-        }
-        console.log(res, "FROM SEARCH");
-        const data = await res.json();
-        console.log(data.json, "FROM SEARCH");
-        let js = {query: value, response: data.json};
-        console.log(js, "FROM SEARCH");
-        setApiResponses(js);
-        console.log(data.json);
-        
-        setValue('');
-        if(inputRef.current) {
-            inputRef.current.innerText = '';
-        }
-    } catch (error) {
-        console.error(error);
-    } finally {
-        setIsLoading(false);
-    }
-  };
-
-  const handleSubmitAsk = async () => {
+  const handleSubmit = async () => {
     if(value.trim() === '') {
         return;
         }
         setIsLoading(true);
         try {
-            const res = await fetch('https://api-kn.replit.app/ask', {
+            const res = await fetch(`https://api-kn.replit.app/${queryType}`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -87,13 +57,9 @@ function Search( { setApiResponses, extraProps } : any) {
             if (!res.ok) {
                 throw new Error('Network response was not ok');
             }
-            console.log(res, "FROM SEARCH");
             const data = await res.json();
-            console.log(data.json, "FROM SEARCH");
-            let js = {query: value, query_type: "ask", response: data.json};
-            console.log(js, "FROM SEARCH");
+            let js = {query: value, query_type: queryType, response: data.json};
             setApiResponses(js);
-            console.log(data.json);
             
             setValue('');
             if(inputRef.current) {
@@ -109,20 +75,28 @@ function Search( { setApiResponses, extraProps } : any) {
 
   const handleRecommend = (query : string) => {
     setValue(query);
-    handleSubmitAsk();
+    handleSubmit();
   }
 
   return (
     <div className='search-div'>
+        {isLoading ? <div className='loading-div'><div className='loader' /></div> : <div></div>}
     <Paper
       component="form"
       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
     >
+    <Select
+        value={queryType}
+        onChange={handleQueryTypeChange}
+        sx={{ mr: 1 }}>
+        <MenuItem value="ask">Ask</MenuItem>
+        <MenuItem value="search">Search</MenuItem>
+    </Select>
       <InputBase
         className='search-bar'
         sx={{ ml: 1, flex: 1 }}
         inputRef = {inputRef}
-        value={value} // Add this line
+        value={value}
         onChange={handleChange} 
         onKeyDown={handleKeyDown}
         placeholder="Ask me something about recent events"
@@ -130,7 +104,7 @@ function Search( { setApiResponses, extraProps } : any) {
         multiline={extraProps?.multiline ?? true}
         rows={extraProps?.rows ?? 3}
       />
-      <div onClick={handleSubmitAsk}>
+      <div onClick={handleSubmit}>
         <IconButton 
                 disabled={isLoading || value.trim() === ''}
                 type="button" 
@@ -141,9 +115,11 @@ function Search( { setApiResponses, extraProps } : any) {
       </div>
     </Paper>
     {extraProps?.recommended && <div className='recommended-div'>
-        <button  onClick={() => handleRecommend("What is the crowdstrike issue?")}>What is the crowdstrike issue?</button>
-        <button onClick={() => handleRecommend("Who won the latest Euros?")}>Who won the latest Euros?</button>
-        <button onClick={() => handleRecommend("Did the startup Exa AI get funded recently?")}>Did the startup Exa AI get funded recently?</button>
+        {
+            recommedations.map((recommendation, index) => (
+                <button key={index} onClick={() => handleRecommend(recommendation)}>{recommendation}</button>
+            ))
+        }
     </div>}
     </div>
   );
