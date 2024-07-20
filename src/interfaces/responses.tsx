@@ -12,5 +12,6 @@ export interface ApiResponse {
 
 export interface ApiResponses {
     query: string;
+    query_type: string;
     response: ApiResponse[];
 }

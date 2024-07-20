@@ -48,6 +48,11 @@
         display: flex;
         justify-content: center;
         width: 100%;
+        .search-div{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
         .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
             width: 80%;
             border-radius: 30px;
@@ -73,10 +78,11 @@
 }
 
 .query-response-pair{
-    height: 100%;
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 0px 0px 30px;
     /* padding: 0px 30px; */
     .query{
         display: flex;

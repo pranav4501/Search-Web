@@ -16,5 +16,22 @@
         .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
             border-radius: 12px;
         }
+        .search-div{
+            form{
+                width:100%;
+            }
+            .recommended-div{
+                padding-top: 5%;
+                display: flex;
+                max-width: 100%;
+                justify-content: space-evenly;
+                button{
+                    background-color: #1d67d6;
+                    color: white;
+                    border-radius: 12px;
+                    max-width: 31%;
+                }
+            }
+        }
     }
 }

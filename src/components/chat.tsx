@@ -4,6 +4,7 @@ import Search from './search';
 import '../assets/chat.css';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ReactMarkdown  from 'react-markdown';
 
 interface ChatProps {
     apiResponsesArray: ApiResponses[];
@@ -36,14 +37,18 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
                             </div>
                             <div className="response">
                                 <div className='response-div message-div'>
-                                {apiResponses.response.map((apiResponse, index) => {
+                                {apiResponses.query_type === "ask" ?(
+                                    <div className="single-response">
+                                        <ReactMarkdown>{apiResponses.response[0].text}</ReactMarkdown>
+                                    </div> )
+                                    :(apiResponses.response.map((apiResponse, index) => {
                                     return (
                                         <div key={index} className="single-response">
                                             <p>{apiResponse.title}</p>
                                             <a target="_blank" href={apiResponse.url}>{apiResponse.url}</a>
                                         </div>
                                     );
-                                })}
+                                }))}
                                 </div>
                             </div>
                         </div>
