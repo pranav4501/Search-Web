@@ -24,30 +24,12 @@
         position: absolute;
         bottom: 20px;
         .search-div{
-            width: 100%;
+            width: 80%;
             display: flex;
             justify-content: center;
         }
         .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
-            width: 80%;
             border-radius: 30px;
-            background-color: #103a55;
-            .MuiOutlinedInput-root{
-                color: white;
-                border-color: white;
-                fieldset{
-                    border-color: white;
-                }
-            }
-            .search-bar{
-                color: white;
-            }
-            .MuiSvgIcon-root{
-                color: white;
-            }
-            .MuiSvgIcon-root:hover{
-                cursor: pointer;
-            }
         }
     }
 }
