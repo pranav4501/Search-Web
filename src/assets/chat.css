@@ -1,43 +1,16 @@
 .chat-window{
     box-sizing: border-box;
-    height: 100vh;
-    width: 100vw;
+    flex: 1;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     color: azure;
-    padding: 20px 40px;
-    gap: 20px;
-    .chat-window-header{
-        height: 50px;
-        width: 100%;
-        justify-content: space-between;
-        display: flex;
-        align-items: flex-start;
-        /* margin-bottom: 20px; */
-        .logo{
-            font-family: "NTR", sans-serif;
-            font-weight: 600;
-            font-style: normal;
-            font-size: 32px;
-        }
-        .icons{
-            display: flex;
-            gap: 20px;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            .MuiSvgIcon-root{
-                font-size: 26px;
-            }
-            .MuiSvgIcon-root:hover{
-                cursor: pointer;
-                color: #477bc9;
-                transition: 0.2s linear;
-            }
-        }
-    }
+    max-height: calc(100% - 150px);
+    overflow-y: auto;
+    overflow-x: hidden;
+
     .chat-window-div{
         width: 80%;
         height: 100%;
@@ -48,6 +21,8 @@
         display: flex;
         justify-content: center;
         width: 100%;
+        position: absolute;
+        bottom: 20px;
         .search-div{
             width: 100%;
             display: flex;
@@ -80,19 +55,18 @@
 .message-div{
     border-radius: 20px;
     background-color: #1d67d6;
-    /* rgb(65, 65, 65); */
 }
 
 .query-response-pair{
-    /* height: 100%; */
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 0px 0px 30px;
-    /* padding: 0px 30px; */
     .query{
         display: flex;
         justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
         .query-div{
             display: flex;
             justify-content: center;
@@ -102,8 +76,10 @@
     }
     .response{
         display: flex;
+        align-items: center;
+        gap: 10px;
         .response-div{
-            background-color: #202a3a;
+            background-color: transparent;
             display: flex;
             justify-content: center;
             flex-direction: column;

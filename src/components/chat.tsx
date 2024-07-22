@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect, FormEvent, KeyboardEvent } from 're
 import { ApiResponse, ApiResponses } from '../interfaces/responses';
 import Search from './search';
 import '../assets/chat.css';
-import SettingsIcon from '@mui/icons-material/Settings';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReactMarkdown  from 'react-markdown';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import '../data/recommendations.json';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import LinkWithPopover from './linkpopover';
 
 interface ChatProps {
     apiResponsesArray: ApiResponses[];
@@ -28,17 +29,30 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
           console.error('Failed to copy text: ', err);
         }
     };
+
+    const santizeResponse = ( text: any ) => {
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const parts = text.split(urlRegex);
+        return parts.map((part: string, index: number) => {
+            if (part.match(urlRegex)) {
+              // Get surrounding context for summary
+              const prevContext = parts[index - 1]?.trim().split(' ').slice(-10).join(' ') || '';
+              const nextContext = parts[index + 1]?.trim().split(' ').slice(0, 10).join(' ') || '';
+              const summary = `${prevContext} ${nextContext}`.trim();
+      
+              return (
+                <LinkWithPopover
+                    key={index}
+                    url={part.trim()}
+                    summary={summary}
+                />
+              );
+            }
+            return <ReactMarkdown key={index}>{part}</ReactMarkdown>;
+        });
+    }
     return (
         <div className='chat-window'>
-            <div className='chat-window-header'>
-                <div className='logo'>
-                    అడుగు
-                </div>
-                <div className='icons'>
-                    <SettingsIcon/>
-                    <AccountCircleIcon/>
-                </div>
-            </div>
             <div className='chat-window-div'>
                 {apiResponsesArray.map((apiResponses, index) => {
                     return(
@@ -49,12 +63,15 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
                                         {apiResponses.query}
                                     </span>
                                 </div>
+                                <div className="query-avatar"><AccountCircleIcon/></div>
                             </div>
                             <div className="response">
+                                <div className="response-avatar"><SmartToyIcon/></div>
                                 <div className='response-div message-div'>
                                 {apiResponses.query_type === "ask" ? (
                                     <div className="single-response">
                                         <ReactMarkdown>{apiResponses.response[0].text}</ReactMarkdown>
+                                        {/* {santizeResponse(apiResponses.response[0].text)} */}
                                     </div> )
                                     : (apiResponses.response.map((apiResponse, index) => {
                                     return (
