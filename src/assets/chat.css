@@ -18,8 +18,8 @@
         padding: 10px;
     }
     .chat-search-div{
-        display: flex; 
-        justify-content: center;
+        display: flex !important; 
+        justify-content: center !important;
         width: 100%;
         position: absolute;
         bottom: 20px;
