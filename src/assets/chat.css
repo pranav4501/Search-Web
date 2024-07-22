@@ -25,7 +25,7 @@
         bottom: 20px;
         .search-div{
             width: 80%;
-            display: flex;
+            display: flex; 
             justify-content: center;
         }
         .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
