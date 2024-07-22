@@ -29,7 +29,7 @@
             justify-content: center;
         }
         .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
-            border-radius: 30px;
+            border-radius: 30px; 
         }
     }
 }
