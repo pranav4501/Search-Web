@@ -2,12 +2,15 @@
     form.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
         width:100%;
         border-radius: 12px;
+        background-color: #103a55;
         .MuiOutlinedInput-root{
             border-radius: 22px;
             width: fit-content;
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            color: white;
+            border-color: white;
             .MuiSelect-select{
                 padding: 5px 25px 5px 10px;
             }
@@ -17,6 +20,18 @@
                 width: 20px;
                 height: 20px;
             }
+            fieldset{
+                border-color: white;
+            }
+        }
+        .search-bar{
+            color: white;
+        }
+        .MuiSvgIcon-root{
+            color: white;
+        }
+        .MuiSvgIcon-root:hover{
+            cursor: pointer;
         }
     }
     .recommended-div{

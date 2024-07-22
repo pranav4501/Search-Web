@@ -7,9 +7,8 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 function HomePage({ setApiResponses } : any) {
     return (
         <div className="home-page">
-            <h1>Welcome</h1>
+            <h1>Hey There !</h1>
             <div className='search-bar-div'>
-                <h3>Search</h3>
                 <Search setApiResponses={setApiResponses} extraProps={{
                     recommended: true,
                 }}/>

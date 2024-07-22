@@ -4,7 +4,9 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import recommedations from '../data/recommendations.json';
+import {useSelector, useDispatch } from 'react-redux';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import slice from '../state/Slice';
 import '../assets/search.css'
 
 interface ApiResponse {
@@ -14,7 +16,8 @@ interface ApiResponse {
 function Search( { setApiResponses, extraProps } : any) {
     const [value, setValue] = useState('');
     const [queryType, setQueryType] = useState<string>('ask');
-    const [isLoading, setIsLoading] = useState(false);
+    const isLoading = useSelector((state: any) => state.loading);
+    const dispatch = useDispatch();
     const inputRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -43,7 +46,7 @@ function Search( { setApiResponses, extraProps } : any) {
     if(value.trim() === '') {
         return;
         }
-        setIsLoading(true);
+        dispatch(slice.actions.setLoading({loading: true}))
         try {
             const res = await fetch(`https://api-kn.replit.app/${queryType}`, {
                 method: 'POST',
@@ -68,7 +71,7 @@ function Search( { setApiResponses, extraProps } : any) {
         } catch (error) {
             console.error(error);
         } finally {
-            setIsLoading(false);
+            dispatch(slice.actions.setLoading({loading: false}))
         }
         setValue('');
       };
@@ -80,7 +83,6 @@ function Search( { setApiResponses, extraProps } : any) {
 
   return (
     <div className='search-div'>
-        {isLoading ? <div className='loading-div'><div className='loader' /></div> : <div></div>}
     <Paper
       component="form"
       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
