@@ -15,7 +15,6 @@ function App() {
   const isLoading = useSelector((state: any) => state.loading);
   const addApiResponse = (apiResponse: ApiResponses) => {
     setApiResponses([...apiResponses, apiResponse]);
-    console.log(apiResponses, "FROM APP");
   }
 
   return (
@@ -23,8 +22,8 @@ function App() {
       {isLoading ? <div className='loading-div'><div className='loader' /></div> : <div/>}
       <Navbar/>
       { apiResponses.length > 0 ?
-          <Chat apiResponsesArray={apiResponses} setApiResponses={addApiResponse}/> :
-          <HomePage setApiResponses={addApiResponse}/>
+          <Chat apiResponsesArray={apiResponses} setApiResponses={setApiResponses}/> :
+          <HomePage setApiResponses={setApiResponses}/>
       }
     </div>
   );
