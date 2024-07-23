@@ -1,12 +1,16 @@
 .summary-popover{
-    max-height: 300px;
+    max-height: calc(1.1em * 7);
     min-width: 200px;
     max-width: 300px;
     background-color: #103a55;
     border-radius: 6px;
     padding: 12px 8px;
     color: white;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical; 
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    word-wrap: break-word;
 }
