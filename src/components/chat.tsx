@@ -63,7 +63,7 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
                                     return (
                                         <div key={index} className="single-response">
                                             <p>{apiResponse.title}</p>
-                                            <LinkWithPopover url={apiResponse.url} summary={"summary"}/>
+                                            <LinkWithPopover url={apiResponse.url} summary={apiResponse.summary}/>
                                             {/* <a target="_blank" href={apiResponse.url}>{apiResponse.url}</a> */}
                                         </div>
                                     );
