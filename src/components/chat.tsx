@@ -14,8 +14,16 @@ interface ChatProps {
     setApiResponses: any;
 }
 
+function LinkRenderer(props: any) {
+    return (
+      <a href={props.href} target="_blank" rel="noreferrer">
+        {props.children}
+      </a>
+    );
+  }
+  
+
 const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
-    console.log(apiResponsesArray[0].response,"FROM CHAT");
     const [isCopied, setIsCopied] = useState(false);
     const handleCopyClick = async (event: React.MouseEvent<HTMLSpanElement>) => {
         try {
@@ -70,7 +78,7 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
                                 <div className='response-div message-div'>
                                 {apiResponses.query_type === "ask" ? (
                                     <div className="single-response">
-                                        <ReactMarkdown>{apiResponses.response[0].text}</ReactMarkdown>
+                                        <ReactMarkdown components={{ a: LinkRenderer}}>{apiResponses.response[0].text}</ReactMarkdown>
                                         {/* {santizeResponse(apiResponses.response[0].text)} */}
                                     </div> )
                                     : (apiResponses.response.map((apiResponse, index) => {

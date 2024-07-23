@@ -8,10 +8,13 @@ import {useSelector, useDispatch } from 'react-redux';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import slice from '../state/Slice';
 import '../assets/search.css'
+import { ApiResponse, ApiResponses } from '../interfaces/responses';
 
-interface ApiResponse {
-    data: any;
-}
+
+interface SearchProps {
+    setApiResponses: React.Dispatch<React.SetStateAction<ApiResponse[]>>;
+    extraProps?: any;
+  }
 
 function Search( { setApiResponses, extraProps } : any) {
     const [value, setValue] = useState('');
@@ -28,7 +31,6 @@ function Search( { setApiResponses, extraProps } : any) {
 
     const handleQueryTypeChange = (event: SelectChangeEvent<string>) => {
         setQueryType(event.target.value);
-        console.log(event.target.value);
     };
 
     const handleChange = (e : ChangeEvent<HTMLInputElement |  HTMLTextAreaElement>) => {
@@ -47,8 +49,9 @@ function Search( { setApiResponses, extraProps } : any) {
         return;
         }
         dispatch(slice.actions.setLoading({loading: true}))
+        let fullResponse = '';
         try {
-            const res = await fetch(`https://api-kn.replit.app/${queryType}`, {
+            const res = await fetch(`https://fast-api-openai-dstryr.replit.app/${queryType}`, {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',
@@ -60,9 +63,42 @@ function Search( { setApiResponses, extraProps } : any) {
             if (!res.ok) {
                 throw new Error('Network response was not ok');
             }
+            if(queryType === 'search') {
             const data = await res.json();
-            let js = {query: value, query_type: queryType, response: data.json};
-            setApiResponses(js);
+            setApiResponses((prevResponses: ApiResponses[]) => [
+                ...prevResponses,
+                { query: value, query_type: queryType, response: data.json }
+              ]);
+            }
+            else if(queryType === 'ask') {
+                const reader = res.body!.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                while (true) {
+                    const { done, value:chunk } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    const text = decoder.decode(chunk);
+                    fullResponse += text;
+                    setApiResponses((prevResponses: ApiResponses[]) => {
+                        const updatedResponses = [...prevResponses];
+                        const lastResponse = updatedResponses[updatedResponses.length - 1];
+                        if (lastResponse && lastResponse.query === value && lastResponse.query_type === 'ask') {
+                          lastResponse.response[0].text = fullResponse;
+                        } else {
+                          updatedResponses.push({
+                            query: value,
+                            query_type: 'ask',
+                            response:[{"text": fullResponse, "author": "", "highlights": "", "id": "", "published_data": "", "score": "", "summary": "",  "title": "", "url": ""}]
+                          });
+                        }
+                        return updatedResponses;
+                    });
+                    
+                    
+                }  
+            }         
             
             setValue('');
             if(inputRef.current) {
