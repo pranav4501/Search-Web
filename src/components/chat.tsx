@@ -38,27 +38,6 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
         }
     };
 
-    const santizeResponse = ( text: any ) => {
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const parts = text.split(urlRegex);
-        return parts.map((part: string, index: number) => {
-            if (part.match(urlRegex)) {
-              // Get surrounding context for summary
-              const prevContext = parts[index - 1]?.trim().split(' ').slice(-10).join(' ') || '';
-              const nextContext = parts[index + 1]?.trim().split(' ').slice(0, 10).join(' ') || '';
-              const summary = `${prevContext} ${nextContext}`.trim();
-      
-              return (
-                <LinkWithPopover
-                    key={index}
-                    url={part.trim()}
-                    summary={summary}
-                />
-              );
-            }
-            return <ReactMarkdown key={index}>{part}</ReactMarkdown>;
-        });
-    }
     return (
         <div className='chat-window'>
             <div className='chat-window-div'>
@@ -79,13 +58,13 @@ const Chat : React.FC<ChatProps> = ({ apiResponsesArray, setApiResponses }) => {
                                 {apiResponses.query_type === "ask" ? (
                                     <div className="single-response">
                                         <ReactMarkdown components={{ a: LinkRenderer}}>{apiResponses.response[0].text}</ReactMarkdown>
-                                        {/* {santizeResponse(apiResponses.response[0].text)} */}
                                     </div> )
                                     : (apiResponses.response.map((apiResponse, index) => {
                                     return (
                                         <div key={index} className="single-response">
                                             <p>{apiResponse.title}</p>
-                                            <a target="_blank" href={apiResponse.url}>{apiResponse.url}</a>
+                                            <LinkWithPopover url={apiResponse.url} summary={"summary"}/>
+                                            {/* <a target="_blank" href={apiResponse.url}>{apiResponse.url}</a> */}
                                         </div>
                                     );
                                 }))}

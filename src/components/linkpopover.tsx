@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { usePopper } from 'react-popper';
+import { createPortal } from 'react-dom';
+import '../assets/linkpopover.css';
 
 interface LinkWithPopoverProps {
   url: string;
@@ -10,9 +11,24 @@ const LinkWithPopover: React.FC<LinkWithPopoverProps> = ({ url, summary }) => {
   const [showPopover, setShowPopover] = useState(false);
   const linkRef = useRef(null);
   const popperRef = useRef(null);
-  const { styles, attributes } = usePopper(linkRef.current, popperRef.current, {
-    placement: 'top',
-  });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    setMousePosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const popover = showPopover ? (
+    <div
+      className="summary-popover"
+      style={{
+        position: 'absolute',
+        left: mousePosition.x + 15,
+        top: mousePosition.y + 15,
+      }}
+    >
+      {summary}
+    </div>
+  ) : null;
 
   return (
     <>
@@ -24,19 +40,11 @@ const LinkWithPopover: React.FC<LinkWithPopoverProps> = ({ url, summary }) => {
         className="source-link"
         onMouseEnter={() => setShowPopover(true)}
         onMouseLeave={() => setShowPopover(false)}
+        onMouseMove={handleMouseMove}
       >
         {url}
       </a>
-      {showPopover && (
-        <div
-          ref={popperRef}
-          style={styles.popper}
-          {...attributes.popper}
-          className="popover"
-        >
-          {summary}
-        </div>
-      )}
+      {createPortal(popover, document.body)}
     </>
   );
 };
