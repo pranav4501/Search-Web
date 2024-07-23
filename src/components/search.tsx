@@ -126,7 +126,12 @@ function Search( { setApiResponses, extraProps } : any) {
     <Select
         value={queryType}
         onChange={handleQueryTypeChange}
-        sx={{ mr: 1 }}>
+        sx={{ mr: 1 }}
+        MenuProps={{
+          PaperProps: {
+            className: "query-ask-select"
+          }
+        }}>
         <MenuItem value="ask">Ask</MenuItem>
         <MenuItem value="search">Search</MenuItem>
     </Select>
