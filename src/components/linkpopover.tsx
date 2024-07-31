@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import '../assets/linkpopover.css';
+import '../assets/linkpopover.scss';
 
 interface LinkWithPopoverProps {
   url: string;

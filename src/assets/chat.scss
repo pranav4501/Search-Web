@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .chat-window{
     box-sizing: border-box;
     flex: 1;
@@ -10,6 +12,7 @@
     max-height: calc(100% - 150px);
     overflow-y: auto;
     overflow-x: hidden;
+    font-family: "Roboto";
 
     .chat-window-div{
         width: 80%;
@@ -49,6 +52,9 @@
         justify-content: flex-end;
         align-items: center;
         gap: 10px;
+        .query-avatar{
+            color: $light-secondary-color;
+        }
         .query-div{
             display: flex;
             justify-content: center;
@@ -60,6 +66,9 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        .response-avatar{
+            color: $light-secondary-color;
+        }
         .response-div{
             background-color: transparent;
             display: flex;
@@ -68,13 +77,16 @@
             padding: 15px 25px;
             gap: 15px;
             position: relative;
+            color: $light-primary-text;
             .single-response{
-                /* padding: 10px; */
                 border-radius: 12px;
-                /* background: #000f18; */
                 margin-bottom: 10px;
+                &.single-response-ask{
+                    line-height: 1.35em;
+                }
                 p {
                     margin: 5px 0px;
+                    color: black;
                 }
                 a {
                     color: rgb(67, 142, 228);
@@ -90,7 +102,6 @@
                 justify-content: center;
                 align-items: center;
                 gap: 5px;
-                /* background-color: rgba(29, 103, 214, 0.2); */
                 border-radius: 3px;
                 padding: 3px 6px;
                 .MuiSvgIcon-root{
@@ -107,6 +118,46 @@
         }
         .response-div:hover .copy-popover{
                 visibility: visible;
+        }
+    }
+}
+
+.dark-mode{
+    .message-div{
+        background-color: #1d67d6;
+    }
+    
+    .query-response-pair{
+        .query{
+            .query-avatar{
+                color: white;
+            }
+        }
+        .response{
+            .response-avatar{
+                color: white;
+            }
+            .response-div{
+                color: black;
+                background-color: transparent;
+                .single-response{
+                    p {
+                        color: white;
+                    }
+                    a {
+                        color: rgb(67, 142, 228);
+                    }
+                }
+                .copy-popover{
+                    .MuiSvgIcon-root{
+                        color: rgb(255, 255, 255);
+                        font-size: 18px;
+                    }
+                    span{
+                        font-size: 14px;
+                    }
+                }
+            }
         }
     }
 }

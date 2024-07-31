@@ -2,15 +2,16 @@
     form.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
         width:100%;
         border-radius: 12px;
-        background-color: #103a55;
+        padding: 4px 8px;
+        background-color: #e7e7e7;
         .MuiOutlinedInput-root{
             border-radius: 22px;
             width: fit-content;
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            color: white;
-            border-color: white;
+            color: rgb(31, 31, 31);
+            border-color: rgb(44, 44, 44);
             .MuiSelect-select{
                 padding: 5px 25px 5px 10px;
             }
@@ -21,14 +22,14 @@
                 height: 20px;
             }
             fieldset{
-                border-color: white;
+                border-color: rgb(37, 37, 37);
             }
         }
         .search-bar{
-            color: white;
+            color: rgb(31, 31, 31);
         }
         .MuiSvgIcon-root{
-            color: white;
+            color: rgb(22, 22, 22);
         }
         .MuiSvgIcon-root:hover{
             cursor: pointer;
@@ -40,6 +41,8 @@
         max-width: 100%;
         justify-content: space-evenly;
         button{
+            border: none;
+            padding: 6px 10px;
             background-color: #1d67d6;
             color: white;
             border-radius: 12px;
@@ -75,6 +78,33 @@
         }
         li.Mui-selected:hover{
             background-color: #0d2e42 !important;
+        }
+    }
+}
+
+.dark-mode{
+    .search-div{
+        form.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded{
+            background-color: #103a55;
+            .MuiOutlinedInput-root{
+                color: white;
+                border-color: white;
+                fieldset{
+                    border-color: white;
+                }
+            }
+            .search-bar{
+                color: white;
+            }
+            .MuiSvgIcon-root{
+                color: white;
+            }
+        }
+        .recommended-div{
+            button{
+                background-color: #1d67d6;
+                color: white;
+            }
         }
     }
 }

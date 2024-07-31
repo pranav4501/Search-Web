@@ -1,7 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Search from './components/search';
+import './App.scss';
 import { useState } from 'react';
 import { ApiResponses  } from './interfaces/responses';
 import Chat from './components/chat';
@@ -12,14 +10,10 @@ import {useSelector } from 'react-redux';
 function App() {
 
   const [apiResponses, setApiResponses] = useState<ApiResponses[]>([]);
-  const isLoading = useSelector((state: any) => state.loading);
-  const addApiResponse = (apiResponse: ApiResponses) => {
-    setApiResponses([...apiResponses, apiResponse]);
-  }
+  const isLightMode = useSelector((state: any) => state.isLightMode);
 
   return (
-    <div className="app">
-      {isLoading ? <div className='loading-div'><div className='loader' /></div> : <div/>}
+    <div className={`app ${isLightMode ? 'light-mode' : 'dark-mode'}`}>
       <Navbar/>
       { apiResponses.length > 0 ?
           <Chat apiResponsesArray={apiResponses} setApiResponses={setApiResponses}/> :

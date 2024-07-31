@@ -1,6 +1,6 @@
 import React from 'react';
 import Search from './search';
-import '../assets/homepage.css';
+import '../assets/homepage.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
@@ -11,6 +11,7 @@ function HomePage({ setApiResponses } : any) {
             <div className='search-bar-div'>
                 <Search setApiResponses={setApiResponses} extraProps={{
                     recommended: true,
+                    isHomePage: true
                 }}/>
             </div>
             <div className='help-window'>

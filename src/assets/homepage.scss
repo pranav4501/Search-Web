@@ -1,3 +1,4 @@
+@import "./variables.scss";
 .home-page{
     flex: 1;
     width: 100%;
@@ -6,7 +7,7 @@
     align-items: center;
     flex-direction: column;
     gap: 40px;
-    color: aliceblue;
+    color: $light-primary-text;
     font-family: 'Roboto';
     .help-window{
         width: 60%;
@@ -24,10 +25,21 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background-color: rgb(45, 45, 75);
+            background-color: rgb(214, 214, 214);
             padding: 20px;
             gap: 20px;
             border-radius: 12px;
+        }
+    }
+}
+
+.dark-mode{
+    .home-page{
+        color: $dark-primary-text;
+        .help-window{
+            .help-window-info{
+                background-color: rgb(45, 45, 75);
+            }
         }
     }
 }

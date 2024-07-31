@@ -1,39 +1,7 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+@import "./assets/variables.scss";
 
 .app{
-  background-color: #000f18;
-  /* background-color: #272727; */
+  background-color: $light-primary-bg;
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
@@ -66,7 +34,7 @@
   align-items: flex-start;
   position: sticky;
   top: 0px;
-  color: white;
+  color: $light-primary-text;
   padding: 1% 4%;
   .logo{
       font-family: "NTR", sans-serif;
@@ -96,11 +64,10 @@
   top: 0px;
   left: 0px;
   height: 100%;
-  width: 100%;
+  width: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
 .loader {
@@ -110,13 +77,37 @@
   clip-path: inset(-45px);
   box-shadow: -60px 15px,-60px 15px,-60px 15px;
   transform: translateY(-15px);
-  animation: l19 1s infinite linear;
+  animation: l19-light 1s infinite linear;
 }
-@keyframes l19{ 
+@keyframes l19-light{ 
+  16.67% {box-shadow:-60px 15px #292929,-60px 15px #292929,19px 15px #292929}
+  33.33% {box-shadow:-60px 15px #292929,  0px 15px #292929 ,19px 15px #292929}
+  40%,60%{box-shadow:-19px 15px #292929,  0px 15px #292929,19px 15px #292929}
+  66.67% {box-shadow:-19px 15px #292929,  0px 15px #292929,60px 15px #292929}
+  83.33% {box-shadow:-19px 15px #292929, 60px 15px #292929,60px 15px #292929}
+  100%   {box-shadow: 60px 15px #292929, 60px 15px #292929,60px 15px #292929}
+}
+
+@keyframes l19-dark{ 
   16.67% {box-shadow:-60px 15px #477bc9,-60px 15px #477bc9,19px 15px #477bc9}
   33.33% {box-shadow:-60px 15px #477bc9,  0px 15px #477bc9 ,19px 15px #477bc9}
   40%,60%{box-shadow:-19px 15px #477bc9,  0px 15px #477bc9,19px 15px #477bc9}
   66.67% {box-shadow:-19px 15px #477bc9,  0px 15px #477bc9,60px 15px #477bc9}
   83.33% {box-shadow:-19px 15px #477bc9, 60px 15px #477bc9,60px 15px #477bc9}
   100%   {box-shadow: 60px 15px #477bc9, 60px 15px #477bc9,60px 15px #477bc9}
+}
+
+.dark-mode{
+  &.app{
+    background-color: $dark-primary-bg;
+    .navbar{
+      color: $dark-primary-text;
+      .MuiSvgIcon-root:hover{
+        color: #477bc9;
+      }
+    }
+    .loader {
+      animation: l19-dark 1s infinite linear;
+    }
+  }
 }
