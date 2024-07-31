@@ -5,7 +5,8 @@ const initialState = {
         details: null,
         favourite: null
     },
-    loading: false
+    isLightMode: false,
+    loading: false,
 }
 
 const slice = createSlice({
@@ -21,6 +22,9 @@ const slice = createSlice({
         },
         setLoading: (state, { payload }) => {
             state.loading = payload.loading;
+        },
+        setLightMode: (state, { payload }) => {
+            state.isLightMode = payload.lightMode;
         }
     }
 })

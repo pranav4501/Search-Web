@@ -7,7 +7,7 @@ import recommedations from '../data/recommendations.json';
 import {useSelector, useDispatch } from 'react-redux';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import slice from '../state/Slice';
-import '../assets/search.css'
+import '../assets/search.scss'
 import { ApiResponse, ApiResponses } from '../interfaces/responses';
 
 
@@ -18,6 +18,7 @@ interface SearchProps {
 
 function Search( { setApiResponses, extraProps } : any) {
     const [value, setValue] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
     const [queryType, setQueryType] = useState<string>('ask');
     const isLoading = useSelector((state: any) => state.loading);
     const dispatch = useDispatch();
@@ -45,72 +46,83 @@ function Search( { setApiResponses, extraProps } : any) {
     };
 
   const handleSubmit = async () => {
-    if(value.trim() === '') {
-        return;
+    if(value.trim() === '' || isSearching) return;
+    setIsSearching(true);
+    setApiResponses((prevResponses: ApiResponses[]) => {
+      const updatedResponses = [...prevResponses];
+      const fullResponse = "";
+      updatedResponses.push({
+        query: value,
+        query_type: 'ask',
+        response:[{"text": fullResponse, "author": "", "highlights": "", "id": "", "published_data": "", "score": "", "summary": "",  "title": "", "url": ""}]
+      })
+      return updatedResponses; 
+    })
+    dispatch(slice.actions.setLoading({loading: true}))
+    let fullResponse = '';
+    try {
+        const res = await fetch(`https://fast-api-openai-dstryr.replit.app/${queryType}`, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            query: value,
+            }),
+        });
+        if (!res.ok) {
+            throw new Error('Network response was not ok');
         }
-        dispatch(slice.actions.setLoading({loading: true}))
-        let fullResponse = '';
-        try {
-            const res = await fetch(`https://fast-api-openai-dstryr.replit.app/${queryType}`, {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                query: value,
-                }),
-            });
-            if (!res.ok) {
-                throw new Error('Network response was not ok');
-            }
-            if(queryType === 'search') {
-            const data = await res.json();
-            setApiResponses((prevResponses: ApiResponses[]) => [
-                ...prevResponses,
-                { query: value, query_type: queryType, response: data.json }
-              ]);
-            }
-            else if(queryType === 'ask') {
-                const reader = res.body!.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-                while (true) {
-                    const { done, value:chunk } = await reader.read();
-                    if (done) {
-                        break;
+        if(queryType === 'search') {
+          const data = await res.json();
+          setApiResponses((prevResponses: ApiResponses[]) => [
+              ...prevResponses,
+              { query: value, query_type: queryType, response: data.json }
+            ]);
+          }
+        else if(queryType === 'ask') {
+            const reader = res.body!.getReader();
+            const decoder = new TextDecoder();
+            let buffer = '';
+            while (true) {
+                const { done, value:chunk } = await reader.read();
+                if (done) {
+                    break;
+                }
+                const text = decoder.decode(chunk);
+                fullResponse += text;
+                setApiResponses((prevResponses: ApiResponses[]) => {
+                    const updatedResponses = [...prevResponses];
+                    const lastResponse = updatedResponses[updatedResponses.length - 1];
+                    if (lastResponse && lastResponse.query === value && lastResponse.query_type === 'ask') {
+                      dispatch(slice.actions.setLoading({loading: false}));
+                      lastResponse.response[0].text = fullResponse;
+                    } else {
+                      updatedResponses.push({
+                        query: value,
+                        query_type: 'ask',
+                        response:[{"text": fullResponse, "author": "", "highlights": "", "id": "", "published_data": "", "score": "", "summary": "",  "title": "", "url": ""}]
+                      });
                     }
-                    const text = decoder.decode(chunk);
-                    fullResponse += text;
-                    setApiResponses((prevResponses: ApiResponses[]) => {
-                        const updatedResponses = [...prevResponses];
-                        const lastResponse = updatedResponses[updatedResponses.length - 1];
-                        if (lastResponse && lastResponse.query === value && lastResponse.query_type === 'ask') {
-                          lastResponse.response[0].text = fullResponse;
-                        } else {
-                          updatedResponses.push({
-                            query: value,
-                            query_type: 'ask',
-                            response:[{"text": fullResponse, "author": "", "highlights": "", "id": "", "published_data": "", "score": "", "summary": "",  "title": "", "url": ""}]
-                          });
-                        }
-                        return updatedResponses;
-                    });
-                    
-                    
-                }  
-            }         
-            
-            setValue('');
-            if(inputRef.current) {
-                inputRef.current.innerText = '';
-            }
-        } catch (error) {
-            console.error(error);
-        } finally {
-            dispatch(slice.actions.setLoading({loading: false}))
-        }
+                    return updatedResponses;
+                });
+                
+                
+            }  
+        }         
+        
         setValue('');
-      };
+        if(inputRef.current) {
+            inputRef.current.innerText = '';
+        }
+    } catch (error) {
+        console.error(error);
+    } finally {
+        setIsSearching(false);
+        dispatch(slice.actions.setLoading({loading: false}));
+    }
+    setValue('');
+  };
 
   const handleRecommend = (query : string) => {
     setValue(query);
